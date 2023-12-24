@@ -27,5 +27,7 @@ protected:
 
 	virtual void BeginPlay() override;
 
+private:
+
 	// End Actor interface
 };

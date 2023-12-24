@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+#include "Public/WeaponSystem.h"
+#include <Kismet/GameplayStatics.h>
 #include "HordeGameCharacter.generated.h"
 
 class UInputComponent;
@@ -41,6 +43,9 @@ class AHordeGameCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
 	
+
+	UWeaponSystem* weaponSystem;
+
 public:
 	AHordeGameCharacter();
 

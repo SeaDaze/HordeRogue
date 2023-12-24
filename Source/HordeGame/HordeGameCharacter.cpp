@@ -55,6 +55,20 @@ void AHordeGameCharacter::BeginPlay()
 		}
 	}
 
+	TArray<AActor*, FDefaultAllocator> actors;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), "GameLogicActor", actors);
+
+	AActor* missionLogicActor = actors[0];
+
+	if (missionLogicActor != nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Found game logic actor!"));
+		weaponSystem = missionLogicActor->GetComponentByClass<UWeaponSystem>();
+		if (weaponSystem != nullptr)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Found weapon system component!"));
+		}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
