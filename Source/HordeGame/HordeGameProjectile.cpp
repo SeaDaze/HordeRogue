@@ -39,15 +39,14 @@ void AHordeGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActo
 		UHealthComponent* otherActorHealthComponent = OtherActor->FindComponentByClass<UHealthComponent>();
 		if (otherActorHealthComponent != nullptr)
 		{
-			otherActorHealthComponent->ApplyDamage(50.0f);
+			otherActorHealthComponent->ApplyDamage(damage, Hit.Location);
 		}
 
-		//if ((OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
-		//{
-		//	OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
-
-		//	
-		//}
 		Destroy();
 	}
+}
+
+void AHordeGameProjectile::SetDamage(float newDamage)
+{
+	damage = newDamage;
 }

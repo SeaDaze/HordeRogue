@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "ActorSpawnComponent.h"
+#include "DamageNumberWidget.h"
 #include "HealthComponent.generated.h"
 
 
@@ -17,6 +18,12 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	TSubclassOf<UDamageNumberWidget> damageNumbersWidgetClass;
+
+	UPROPERTY(EditAnywhere, Category = "Widgets")
+	UDamageNumberWidget* damageNumbersWidget;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -25,7 +32,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void ApplyDamage(float damage);
+	void ApplyDamage(float damage, FVector damageLocation);
 	void InitialiseDeathNotification(UActorSpawnComponent* actorSpawnComponent);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Example)

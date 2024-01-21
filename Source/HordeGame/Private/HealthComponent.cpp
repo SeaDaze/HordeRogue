@@ -2,6 +2,9 @@
 
 
 #include "HealthComponent.h"
+#include "Blueprint/UserWidget.h"
+#include "Blueprint/WidgetTree.h"
+#include "Components/TextBlock.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -32,9 +35,23 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-void UHealthComponent::ApplyDamage(float damage)
+void UHealthComponent::ApplyDamage(float damage, FVector damageLocation)
 {
 	currentHealth = FMath::Clamp(currentHealth - damage, 0, maxHealth);
+	//UE_LOG(LogTemp, Warning, TEXT("ApplyDamage: Received Damage=%f"), damage);
+	if (damageNumbersWidgetClass)
+	{
+		damageNumbersWidget = Cast<UDamageNumberWidget>(CreateWidget(GetWorld(), damageNumbersWidgetClass));
+		damageNumbersWidget->AddToViewport();
+		if (damageNumbersWidget)
+		{
+			damageNumbersWidget->OnDamageUpdated(damage, damageLocation);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("BeginPlay: damageNumbersWidget is invalid"));
+		}
+	}
 	if (currentHealth == 0)
 	{
 		if (actorSpawnComponent != nullptr)
@@ -47,6 +64,6 @@ void UHealthComponent::ApplyDamage(float damage)
 
 void UHealthComponent::InitialiseDeathNotification(UActorSpawnComponent* actorSpawnComponentReference)
 {
-	UE_LOG(LogTemp, Log, TEXT("UHealthComponent::InitialiseDeathNotification() - Initialised death notification"));
+	//UE_LOG(LogTemp, Log, TEXT("UHealthComponent::InitialiseDeathNotification() - Initialised death notification"));
 	actorSpawnComponent = actorSpawnComponentReference;
 }
